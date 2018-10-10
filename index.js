@@ -1,45 +1,24 @@
-import { NeuralNetwork } from 'brain.js';
-import _ from 'lodash';
-import fin from 'technicalindicators';
-import * as tf from '@tensorflow/tfjs';
-import axios from 'axios';
+// import { NeuralNetwork } from 'brain.js';
+const _ = require('lodash');
+const fin = require('technicalindicators');
+const tf = require('@tensorflow/tfjs');
+const axios = require('axios');
+
+require('@tensorflow/tfjs-node');
 
 const getData = async () => {
-  const req = 'https://bitcoincharts.com/charts/chart.json?m=bitstampUSD&SubmitButton=Draw&r=&i=Daily&c=0&s=&e=&Prev=&Next=&t=W&b=&a1=&m1=10&a2=&m2=25&x=0&i1=PPO&i2=&i3=&i4=&v=1&cv=0&ps=0&l=1&p=0&';
+  const req = 'https://bitcoincharts.com/charts/chart.json?m=bitstampUSD&SubmitButton=Draw&i=Daily&t=W&m1=10&m2=25&i1=PPO&v=1&cv=0&ps=0&l=1&p=0';
   return axios.get(req);
 }
 
+// 2D array of price movements
+// [time, open, high, low, close, volume (BTC), volume (USD), weighted price]
+const data = [];
 
-const data = [
-  {
-    input: [0,0,0],
-    output: [0]
-  },
-  {
-    input: [0,0,1],
-    output: [0]
-  },
-  {
-    input: [0,1,1],
-    output: [0]
-  },
-  {
-    input: [1,0,1],
-    output: [1]
-  },
-  {
-    input: [1,1,1],
-    output: [1]
-  },
-];
+const run = async () => {
+  const res = await getData();
+  console.log(res.data);
+  data = res.data;
+}
 
-const chart = await getData();
-console.log(chart);
-
-// const net = new NeuralNetwork();
-
-// net.train(data);
-
-// const res = net.run([1,0,0]);
-
-// console.log('result: ', res);
+run();
