@@ -1,34 +1,42 @@
 
 import Chart from 'chart.js';
-import trxDataa from './history-data.json';
+import sampleData from './history-data.json';
+import { getData } from './fetcher';
 
-let prev = 1;
-const trxData = trxDataa.map(trx => {
-    if (trx[7] > 99999999) {
-        // number not present
-        trx[7] = prev;
-    } else {
-        prev = trx[7];
-    }
-    let point = {
-        x: new Date(trx[0] * 1000),
-        y: trx[7]
-    }
-    return point;
-});
+const getGraphFromData = (data) => {
+    let prev = 1;
+    const trxData = sampleData.map(trx => {
+        if (trx[7] > 99999999) {
+            // number not present
+            trx[7] = prev;
+        } else {
+            prev = trx[7];
+        }
+        let point = {
+            x: new Date(trx[0] * 1000),
+            y: trx[7]
+        }
+        return point;
+    });
+    return trxData;
+}
 
-var color = Chart.helpers.color;
-// trxData = trxData.splice(0, 600);
-var scatterChartData = {
-    datasets: [{
-        label: 'Price Points',
-        borderColor: 'rgb(75, 192, 192)',
-        backgroundColor: color('rgb(75, 192, 192)').alpha(0.2).rgbString(),
-        data: trxData
-    }]
-};
 
-const createChart = () => {
+const createChart = async() => {
+    const rawData = await getData('daily');
+    const trxData = getGraphFromData(rawData);
+
+    var color = Chart.helpers.color;
+    // trxData = trxData.splice(0, 600);
+    var scatterChartData = {
+        datasets: [{
+            label: 'Price Points',
+            borderColor: 'rgb(75, 192, 192)',
+            backgroundColor: color('rgb(75, 192, 192)').alpha(0.2).rgbString(),
+            data: trxData
+        }]
+    };
+
     var ctx = document.getElementById('canvas').getContext('2d');
     Chart.defaults.global.elements.point.radius = 1;
     Chart.Scatter(ctx, {
