@@ -1,20 +1,26 @@
 {
-  "name": "crypto-esp",
-  "version": "1.0.0",
-  "description": "ai to check who wrote a message",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
+  "name": "crypto-foresight",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
-    "@tensorflow/tfjs": "^0.13.1",
-    "@tensorflow/tfjs-node": "^0.1.18",
-    "axios": "^0.18.0",
-    "brain.js": "^1.2.8",
-    "lodash": "^4.17.11",
-    "technicalindicators": "^2.0.1"
-  }
+    "chart.js": "^2.7.2",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
+    "react-scripts": "2.0.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }

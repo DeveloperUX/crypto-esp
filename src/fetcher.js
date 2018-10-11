@@ -20,5 +20,3 @@ const run = async () => {
   console.log(res.data);
   data = res.data;
 }
-
-run();
