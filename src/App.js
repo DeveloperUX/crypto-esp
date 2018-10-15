@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { createChart } from './charting';
+import { createChart, createRSIChart } from './charting';
+import './magician';
 
 class App extends Component {
   render() {
@@ -10,11 +11,15 @@ class App extends Component {
         <div>
           <canvas id="canvas"></canvas>
         </div>
+        <div>
+          <canvas id="indicator-graph"></canvas>
+        </div>
       </div>
     );
   }
   componentDidMount() {
     createChart();
+    createRSIChart();
   }
 }
 
