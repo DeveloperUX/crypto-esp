@@ -4,14 +4,14 @@ import sampleData from './history-data.json';
 import { getData } from './fetcher';
 import {
     getGraphFromData,
-    getParsedData,
-    getPricesFromData
+    getPriceHistory,
+    getWeightedPrices
 } from './parsing';
-import { getRSI } from './indicator-utils';
+import { getAO } from './indicator-utils';
 
 const createChart = async() => {
     const rawData = await getData('daily');
-    const parsedData = getParsedData(sampleData);
+    const parsedData = getPriceHistory(sampleData);
     const trxData = getGraphFromData(parsedData);
 
     var color = Chart.helpers.color;
@@ -64,9 +64,9 @@ const createChart = async() => {
 };
 
 const createRSIChart = () => {
-    const parsedData = getParsedData(sampleData);
-    const prices = getPricesFromData(parsedData);
-    const smas = getRSI(prices);
+    const parsedData = getPriceHistory(sampleData);
+    const prices = getWeightedPrices(parsedData);
+    const smas = getAO(parsedData);
     const graph = [];
     for (let i in parsedData) {
         graph.push({
@@ -101,27 +101,7 @@ const createRSIChart = () => {
                 xAxes: [{
                     type: 'time'
                 }],
-				yAxes: [{
-					type: 'logarithmic',
-                    ticks: {
-                        callback: function (value, index, values) {
-                            //pass tick values as a string into Number function
-                            const tick = Number(value.toString());
-                            if (tick % 10 === 0) {
-                                return tick;
-                            }
-                        }
-                    },
-                    afterBuildTicks: function(pckBarChart) {
-                        pckBarChart.ticks = [];
-                        pckBarChart.ticks.push(0);
-                        pckBarChart.ticks.push(10);
-                        pckBarChart.ticks.push(100);
-                        pckBarChart.ticks.push(1000);
-                        pckBarChart.ticks.push(10000);
-                        pckBarChart.ticks.push(20000);
-                    }
-				}]
+				yAxes: [{}]
             }
         }
     });

@@ -19,9 +19,17 @@ const getGraphFromData = (data) => {
     return trxData;
 }
 
-const getParsedData = (rawData) => {
-    rawData = rawData.slice(rawData.length - 360, rawData.length);
-    return rawData.map(candle => {
+const getPriceHistory = (rawData) => {
+    // rawData = rawData.slice(rawData.length - 360, rawData.length);
+    let lastGoodCandle = rawData[0];
+    return rawData.map(rawCandle => {
+        let candle = {};
+        if (rawCandle[1] > 99999999) {
+            candle = lastGoodCandle;
+        } else {
+            lastGoodCandle = rawCandle;
+            candle = rawCandle;
+        }
         return {
             time: candle[0],
             open: candle[1],
@@ -35,12 +43,12 @@ const getParsedData = (rawData) => {
     })
 }
 
-const getPricesFromData = (data) => {
+const getWeightedPrices = (data) => {
     return Array.from(data, (candle) => candle.weightedPrice < 999999 ? candle.weightedPrice : 6000);
 }
 
 export {
     getGraphFromData,
-    getParsedData,
-    getPricesFromData
+    getPriceHistory,
+    getWeightedPrices
 }

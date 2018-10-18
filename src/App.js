@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { createChart, createRSIChart } from './charting';
-import './magician';
+import { createModel, train } from './magician.js';
 
 class App extends Component {
   render() {
@@ -20,6 +20,7 @@ class App extends Component {
   componentDidMount() {
     createChart();
     createRSIChart();
+    train();
   }
 }
 

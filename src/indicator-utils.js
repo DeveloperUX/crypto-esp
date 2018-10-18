@@ -20,6 +20,20 @@ const getRSI = (prices, period = 14) => {
     });
 }
 
+/**
+ * working...
+ * @param {*} prices 
+ * @param {*} period 
+ */
+const getAO = (prices, period = 14) => {
+    return ind.AwesomeOscillator.calculate({
+        high: prices.map(p => p.high),
+        low: prices.map(p => p.low),
+        fastPeriod: 5,
+        slowPeriod: 34
+    });
+}
+
 const getROC = (prices, period = 12) => {
     return ind.ROC.calculate({
         values: prices,
@@ -38,6 +52,7 @@ const getBB = (prices, period = 14, stddev = 2) => {
 export {
     getSMA,
     getRSI,
+    getAO,
     getROC,
     getBB
 }
